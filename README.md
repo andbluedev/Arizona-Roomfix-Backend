@@ -21,7 +21,7 @@ pour configurer les variables spécifiques à chaque environnement (dev, product
 Pour lancer l'application en local, vous devez la lancer avec le profil `dev`.
 
 * Avec IntelliJ : [suivre ce tuto sur Stacko](https://stackoverflow.com/a/39775038/7248759)
-* Avec Maven et le plugin : `./mvnw spring-boot:run -Dspring.profiles.active=dev`
+* Avec Maven et le plugin : `./mvnw spring-boot:run`
 
 ## Les plugins Intellij recommandés
 
@@ -33,6 +33,46 @@ Pour lancer l'application en local, vous devez la lancer avec le profil `dev`.
 ## Les Endpoints
 
 Toutes les endpoints sont sur la collection postman associée au repo.
+
+
+## Docker
+
+Docker ici est utilisé pour executer en production l'api.
+
+Pour builder l'image docker.
+
+```
+docker build . -t roomfix-api:v1
+```
+
+Runner le conteneur sur le port 8080 de la machine (accessible sur le port 8080 de localhost par exemple).
+
+```
+docker run <image-roomfix-api> -p 8080:8000 -e DB_URL=<database-user>:<database-password>@<database-url>:3306/roomfix
+```
+
+Par exemple:
+
+```
+docker run roomfix-api:v1 -p 8080:8000 -e DB_URL=root:root@localhost:3306/roomfix
+```
+
+Si vous runnez MySQL avec Docker pensez bien à changer `localhost` par `<mysql-container-name>` afin que les containers peuvent communiquer (carte réseau MacOS et Windows ne permettent pas à Docker de communiquer entre eux sur le localhost).
+
+Il est également possible de runner l'image avec le docker-compose qui contient une docker MySQL et de quoi run l'api (il faut la builder avec les consignes ci-dessus).
+
+Pour run API + MySQL : 
+```
+docker-compose up -d
+```
+
+Pour un MySQL
+```
+docker-compose up mysqldb -d
+```
+
+
+
 
 
 

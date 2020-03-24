@@ -33,3 +33,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### OTHER ###
+db_data
+.mwn
