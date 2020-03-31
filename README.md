@@ -1,5 +1,8 @@
 # RoomFix - API
 
+Ce projet est une API Spring Boot avec Hibernate/JPA comme ORM. 
+La base de données utilisée est une MySQL.
+
 ## Configurer les paramètres et le profil
 
 La première chose à faire pour lancer l'application est de configurer les paramètres spécifiques à votre machine.
