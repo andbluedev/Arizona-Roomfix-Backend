@@ -1,6 +1,8 @@
 package com.roomfix.api.failure;
 
 import com.roomfix.api.common.exceptionhandling.exception.ResourceNotFoundException;
+import com.roomfix.api.device.category.DeviceCategory;
+import com.roomfix.api.device.category.DeviceCategoryRepository;
 import com.roomfix.api.room.Room;
 import com.roomfix.api.room.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,13 @@ public class FailureController {
 
     private final FailureRepository failureRepository;
     private final RoomRepository roomRepository;
+    private final DeviceCategoryRepository deviceCategoryRepository;
 
     @Autowired
-    public FailureController(FailureRepository failureRepository, RoomRepository roomRepository) {
+    public FailureController(FailureRepository failureRepository, RoomRepository roomRepository, DeviceCategoryRepository deviceCategoryRepository) {
         this.failureRepository = failureRepository;
         this.roomRepository = roomRepository;
+        this.deviceCategoryRepository = deviceCategoryRepository;
     }
 
     @GetMapping("")
@@ -36,9 +40,15 @@ public class FailureController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Failure addFailure(@RequestBody Failure newFailure, @RequestParam("roomId") long roomId) {
-        Room room = this.roomRepository.findById(roomId).orElseThrow(ResourceNotFoundException::new);
-        newFailure.setRoom(room);
+    public Failure addFailure(@RequestBody Failure newFailure, @RequestParam("roomId") long roomId, @RequestParam("deviceCategoryId") long deviceCategoryId) {
+        if (roomId != 0) {
+            Room room = this.roomRepository.findById(roomId).orElseThrow(ResourceNotFoundException::new);
+            newFailure.setRoom(room);
+        }
+        if (deviceCategoryId != 0) {
+            DeviceCategory deviceCategory = this.deviceCategoryRepository.findById(deviceCategoryId).orElseThrow(ResourceNotFoundException::new);
+            newFailure.setDeviceCategory(deviceCategory);
+        }
         return this.failureRepository.save(newFailure);
     }
 

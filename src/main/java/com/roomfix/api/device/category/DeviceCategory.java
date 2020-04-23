@@ -1,7 +1,8 @@
-package com.roomfix.api.failure;
+package com.roomfix.api.device.category;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.roomfix.api.device.category.DeviceCategory;
+import com.roomfix.api.building.Building;
+import com.roomfix.api.failure.Failure;
 import com.roomfix.api.room.Room;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,35 +12,26 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name="failures")
+@Table(name="devices_categories")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Failure {
+public class DeviceCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String title;
-
-    private String description;
-
-    @Enumerated(EnumType.STRING)
-    private FailureState state = FailureState.UN_RESOLVED;
-
-    @CreatedDate
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    private LocalDateTime endedAt;
+    private String name;
 
     @JsonIgnore
-    @ManyToOne
-    private Room room;
+    @ManyToMany(mappedBy = "devicesCategories")
+    private List<Room> rooms;
 
-    @ManyToOne
-    private DeviceCategory deviceCategory;
+    @JsonIgnore
+    @OneToMany(mappedBy = "deviceCategory", fetch = FetchType.LAZY)
+    private List<Failure> failures;
 }

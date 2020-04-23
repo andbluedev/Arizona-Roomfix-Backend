@@ -1,7 +1,7 @@
 package com.roomfix.api.room;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.roomfix.api.building.Building;
+import com.roomfix.api.device.category.DeviceCategory;
 import com.roomfix.api.failure.Failure;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name="rooms")
+@Table(name = "rooms")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,7 +33,12 @@ public class Room {
     @ManyToOne
     private Building building;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private List<Failure> failures;
+
+    @ManyToMany
+    @JoinTable(name = "room_device_category",
+            joinColumns = @JoinColumn(name = "room_id"),
+            inverseJoinColumns = @JoinColumn(name = "device_category_id"))
+    private List<DeviceCategory> devicesCategories;
 }
