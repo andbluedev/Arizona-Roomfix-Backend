@@ -1,8 +1,6 @@
-package com.roomfix.api.room;
+package com.roomfix.api.failure;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.roomfix.api.building.Building;
-import com.roomfix.api.failure.Failure;
+import com.roomfix.api.room.Room;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,29 +9,31 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Table(name="rooms")
+@Table(name="failures")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Room {
+public class Failure {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String number;
+    private String title;
+
+    private String description;
+
+    @Enumerated(EnumType.STRING)
+    private FailureState state = FailureState.UN_RESOLVED;
 
     @CreatedDate
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @ManyToOne
-    private Building building;
+    private LocalDateTime endedAt;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
-    private List<Failure> failures;
+    @ManyToOne
+    private Room room;
 }

@@ -3,7 +3,6 @@ package com.roomfix.api.room;
 import com.roomfix.api.building.Building;
 import com.roomfix.api.building.BuildingRepository;
 import com.roomfix.api.common.exceptionhandling.exception.ResourceNotFoundException;
-import com.roomfix.api.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
