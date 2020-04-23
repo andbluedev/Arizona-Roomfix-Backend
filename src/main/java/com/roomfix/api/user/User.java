@@ -7,7 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -27,8 +30,11 @@ public class User {
 
     private String mail;
 
-
     private UserRole role;
+
+    @CreatedDate
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     @JsonIgnore
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
@@ -37,6 +43,4 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
     private List<Message> receivedMessages;
-
-
 }
