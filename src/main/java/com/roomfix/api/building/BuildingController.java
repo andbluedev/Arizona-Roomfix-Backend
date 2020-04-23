@@ -20,7 +20,7 @@ public class BuildingController {
 
     @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public List<Building> getAllMessage() {
+    public List<Building> getAllBuilding() {
         return this.buildingRepository.findAll();
     }
 
