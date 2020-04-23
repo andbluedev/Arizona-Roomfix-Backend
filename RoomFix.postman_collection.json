@@ -462,7 +462,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8000/failures?roomId=2",
+							"raw": "localhost:8000/failures?roomId=2&deviceCategoryId=1",
 							"host": [
 								"localhost"
 							],
@@ -474,6 +474,10 @@
 								{
 									"key": "roomId",
 									"value": "2"
+								},
+								{
+									"key": "deviceCategoryId",
+									"value": "1"
 								}
 							]
 						}
@@ -512,6 +516,99 @@
 							"port": "8000",
 							"path": [
 								"failures",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "DeviceCategory",
+			"item": [
+				{
+					"name": "get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/devices/categories",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"devices",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Projecteur\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/devices/categories",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"devices",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/devices/categories/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"devices",
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/devices/categories/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"devices",
+								"categories",
 								"1"
 							]
 						}
