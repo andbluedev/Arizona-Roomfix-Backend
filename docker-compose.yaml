@@ -10,14 +10,14 @@ services:
       MYSQL_DATABASE: roomfix
     ports:
       - '3306:3306'
-
-  api:
-    image: roomfix-api:v1
-    depends_on:
-      - mysqldb
-    environment:
-      DB_URL: root:root@mysqldb:3306/roomfix
-    ports:
-      - '8080:8000'
+#
+#  api:
+#    image: roomfix-api:v1
+#    depends_on:
+#      - mysqldb
+#    environment:
+#      DB_URL: root:root@mysqldb:3306/roomfix
+#    ports:
+#      - '8080:8000'
 
 
