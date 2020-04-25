@@ -22,7 +22,6 @@ public class Room {
     @Column(nullable = false)
     private String number;
 
-    @CreatedDate
     @CreationTimestamp
     private LocalDateTime createdAt;
 

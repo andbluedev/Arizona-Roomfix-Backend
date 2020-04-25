@@ -21,7 +21,6 @@ public class Building {
     @Column(nullable = false)
     private String name;
 
-    @CreatedDate
     @CreationTimestamp
     private LocalDateTime createdAt;
 

@@ -26,7 +26,6 @@ public class Failure {
     @Enumerated(EnumType.STRING)
     private FailureState state = FailureState.UN_RESOLVED;
 
-    @CreatedDate
     @CreationTimestamp
     private LocalDateTime createdAt;
 
