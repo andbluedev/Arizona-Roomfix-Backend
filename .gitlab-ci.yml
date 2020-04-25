@@ -1,0 +1,23 @@
+image: docker:19.03.0
+
+services:
+  - docker:19.03-dind
+
+cache:
+  paths:
+    - .yarn
+
+variables:
+  CONTAINER_IMAGE_MASTER: $DOCKER_REGISTRY_URI/$roomfix-api:${CI_COMMIT_SHORT_SHA}
+
+before_script:
+  - docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD $DOCKER_REGISTRY_URI:5000
+
+build-master:
+  stage: build
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE:prod .
+    - docker push $CI_REGISTRY_IMAGE:prod
+  only:
+    - master
+    

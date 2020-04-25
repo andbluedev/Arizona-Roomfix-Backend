@@ -55,17 +55,15 @@ docker run <image-roomfix-api> -p 8080:8000 -e DB_URL=<database-user>:<database-
 ```
 
 Par exemple:
-
 ```
 docker run -d -p 8000:8000 -e "DB_URL=roomfix:PASSWORD@databases.pouretadev.com:3306/roomfix_master" roomfix-api:v1
-
 ```
 
 Si vous runnez MySQL avec Docker pensez bien à changer `localhost` par `<mysql-container-name>` afin que les containers peuvent communiquer (carte réseau MacOS et Windows ne permettent pas à Docker de communiquer entre eux sur le localhost).
 
 Il est également possible de runner l'image avec le docker-compose qui contient une docker MySQL et de quoi run l'api (il faut la builder avec les consignes ci-dessus).
 
-Pour run API + MySQL : 
+Pour run API + MySQL :
 ```
 docker-compose up -d
 ```
