@@ -16,8 +16,8 @@ before_script:
 build-master:
   stage: build
   script:
-    - docker build -t $CI_REGISTRY_IMAGE:prod .
-    - docker push $CI_REGISTRY_IMAGE:prod
+    - docker build -t $CONTAINER_IMAGE_MASTER .
+    - docker push $CONTAINER_IMAGE_MASTER
   only:
     - master
     
