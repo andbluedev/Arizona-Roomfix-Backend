@@ -2,6 +2,7 @@ image: docker:19.03.0
 
 stages:
   - build-push-image
+  - deploy-image
 
 cache:
   paths:
