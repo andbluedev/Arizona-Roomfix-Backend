@@ -3,9 +3,7 @@ package com.roomfix.api.room;
 import com.roomfix.api.building.Building;
 import com.roomfix.api.device.category.DeviceCategory;
 import com.roomfix.api.failure.Failure;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -15,9 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "rooms")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

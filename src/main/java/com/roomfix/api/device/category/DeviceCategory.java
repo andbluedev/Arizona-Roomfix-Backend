@@ -1,24 +1,16 @@
 package com.roomfix.api.device.category;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.roomfix.api.building.Building;
 import com.roomfix.api.failure.Failure;
 import com.roomfix.api.room.Room;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
+import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name="devices_categories")
-@Getter
-@Setter
-@NoArgsConstructor
+@Table(name = "devices_categories")
+@Data
 public class DeviceCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

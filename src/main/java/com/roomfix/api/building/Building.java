@@ -1,23 +1,18 @@
 package com.roomfix.api.building;
 
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.roomfix.api.room.Room;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name="buildings")
-@Getter
-@Setter
-@NoArgsConstructor
+@Table(name = "buildings")
+@Data
 public class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
