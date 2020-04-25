@@ -36,7 +36,7 @@ public class RoomController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Room addBuilding(@RequestBody Room newRoom, @RequestParam("buildingId") long buildingId) {
+    public Room addRoom(@RequestBody Room newRoom, @RequestParam("buildingId") long buildingId) {
         Building building = this.buildingRepository.findById(buildingId).orElseThrow(ResourceNotFoundException::new);
         newRoom.setBuilding(building);
         return this.roomRepository.save(newRoom);
@@ -44,7 +44,7 @@ public class RoomController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Room deleteBuildingById(@PathVariable("id") long roomId) {
+    public Room deleteRoomById(@PathVariable("id") long roomId) {
         Room roomToDelete = this.roomRepository.findById(roomId).orElseThrow(ResourceNotFoundException::new);
         this.roomRepository.delete(roomToDelete);
         return roomToDelete;

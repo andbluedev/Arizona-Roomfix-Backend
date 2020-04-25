@@ -26,19 +26,19 @@ public class DeviceCategoryController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public DeviceCategory getRoomById(@PathVariable("id") long deviceCategoryId) {
+    public DeviceCategory getDeviceCategoryById(@PathVariable("id") long deviceCategoryId) {
         return this.deviceCategoryRepository.findById(deviceCategoryId).orElseThrow(ResourceNotFoundException::new);
     }
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public DeviceCategory addBuilding(@RequestBody DeviceCategory newDeviceCategory) {
+    public DeviceCategory addDeviceCategory(@RequestBody DeviceCategory newDeviceCategory) {
         return this.deviceCategoryRepository.save(newDeviceCategory);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public DeviceCategory deleteBuildingById(@PathVariable("id") long deviceCategoryId) {
+    public DeviceCategory deleteDeviceCategoryById(@PathVariable("id") long deviceCategoryId) {
         DeviceCategory deviceCategoryToDelete = this.deviceCategoryRepository.findById(deviceCategoryId).orElseThrow(ResourceNotFoundException::new);
         this.deviceCategoryRepository.delete(deviceCategoryToDelete);
         return deviceCategoryToDelete;
