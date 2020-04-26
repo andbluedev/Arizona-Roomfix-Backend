@@ -28,7 +28,7 @@ deploy-image-master:
     entrypoint: [""]
   stage: deploy-image
   script:
-    - echo -n $KUBERNETES_CONFIG | base64 -d > ./kubeconfig
+    - cat $KUBERNETES_CONFIG | base64 -d > ./kubeconfig
     - kubectl set image deployment roomfix-api-master roomfix-api-master=$CONTAINER_IMAGE_MASTER --kubeconfig ./kubeconfig --namespace default
   only:
     - master
