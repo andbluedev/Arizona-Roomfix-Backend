@@ -25,6 +25,7 @@ public class User implements UserDetails {
     private String mail;
     private String password;
 
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     @CreationTimestamp
