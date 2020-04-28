@@ -11,4 +11,9 @@ public class BadRequestException extends BaseHttpException {
     public BadRequestException() {
         super(HttpStatus.BAD_REQUEST, "Bad request");
     }
+
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        return this;
+    }
 }
