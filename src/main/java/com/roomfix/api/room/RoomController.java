@@ -42,6 +42,8 @@ public class RoomController {
         return this.roomRepository.save(newRoom);
     }
 
+
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Room deleteRoomById(@PathVariable("id") long roomId) {
