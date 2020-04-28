@@ -43,7 +43,7 @@ public class FailureController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Failure addFailure(@RequestBody Failure newFailure, @RequestParam("roomId") long roomId, @RequestParam("deviceCategoryId") long deviceCategoryId,@RequestParam("failureTitle") String failureTitle,@RequestParam("failureDescription") String failureDescription ) {
+    public Failure addFailure(@RequestBody Failure newFailure, @RequestParam("roomId") long roomId, @RequestParam("deviceCategoryId") long deviceCategoryId ) {
         if (roomId != 0) {
             Room room = this.roomRepository.findById(roomId).orElseThrow(ResourceNotFoundException::new);
             newFailure.setRoom(room);
@@ -51,22 +51,18 @@ public class FailureController {
         }
         if (deviceCategoryId != 0) {
             DeviceCategory deviceCategory = this.deviceCategoryRepository.findById(deviceCategoryId).orElseThrow(ResourceNotFoundException::new);
-               if (newFailure.getRoom().getDevicesCategories().contains(deviceCategory)){   //check if the device category is compatible with the room
+             //  if (newFailure.getRoom().getDevicesCategories().contains(deviceCategory)){   //check if the device category is compatible with the room
                 newFailure.setDeviceCategory(deviceCategory);
-           } else throw new BadRequestException();
-        }
-
-        if(!failureDescription.isEmpty()){
-            newFailure.setDescription(failureDescription);
+         //  } else throw new BadRequestException();
         }
 
 
-
-        if (failureTitle.length()>=101){
-            newFailure.setTitle(failureTitle.substring(0,100));
-        } else{
-            if (!failureTitle.isEmpty()){
-                newFailure.setTitle(failureTitle);
+        if (newFailure.getTitle().isEmpty()){
+            newFailure.setTitle("Untitled Failure #"+ newFailure.getId());
+        }
+         else{
+            if (newFailure.getTitle().length()>=101){
+                newFailure.setTitle(newFailure.getTitle().substring(0,100));
             }
         }
 
