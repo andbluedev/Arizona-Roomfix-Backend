@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/failures")
@@ -40,15 +41,17 @@ public class FailureController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Failure addFailure(@RequestBody Failure newFailure, @RequestParam("roomId") long roomId, @RequestParam("deviceCategoryId") long deviceCategoryId) {
+    public Failure addFailure(@RequestBody Failure newFailure, @RequestParam("roomId") long roomId, @RequestParam("deviceCategoryId") long deviceCategoryId,@RequestParam("failureTitle") String failureTitle,@RequestParam("failureDescription") String failureDescription ) {
         if (roomId != 0) {
             Room room = this.roomRepository.findById(roomId).orElseThrow(ResourceNotFoundException::new);
             newFailure.setRoom(room);
+
         }
         if (deviceCategoryId != 0) {
             DeviceCategory deviceCategory = this.deviceCategoryRepository.findById(deviceCategoryId).orElseThrow(ResourceNotFoundException::new);
             newFailure.setDeviceCategory(deviceCategory);
         }
+
         return this.failureRepository.save(newFailure);
     }
 
