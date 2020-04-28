@@ -56,17 +56,13 @@ public class FailureController {
            } else throw new BadRequestException();
         }
 
-
-
         if(!failureDescription.isEmpty()){
             newFailure.setDescription(failureDescription);
         }
 
         if (!failureTitle.isEmpty() && failureTitle.length()<101 ){
             newFailure.setTitle(failureTitle);
-        }
-
-
+        } else throw new BadRequestException();
         return this.failureRepository.save(newFailure);
     }
 
