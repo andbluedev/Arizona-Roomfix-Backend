@@ -1,7 +1,6 @@
 package com.roomfix.api.auth.controller;
 
 import com.roomfix.api.auth.dto.LoginRequestDto;
-import com.roomfix.api.auth.service.AuthenticationService;
 import com.roomfix.api.auth.dto.UserCreateDto;
 import com.roomfix.api.common.exceptionhandling.exception.BadRequestException;
 import com.roomfix.api.user.entity.User;
@@ -20,12 +19,12 @@ import java.util.regex.Pattern;
 public class AuthenticationController {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
-    private AuthenticationManager authService;
+    private AuthenticationManager authManager;
 
     @Autowired
     public AuthenticationController(UserRepository userRepository, AuthenticationManager authUserService,  PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.authService = authUserService;
+        this.authManager = authUserService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -49,8 +48,8 @@ public class AuthenticationController {
     }
 
 
-    @RequestMapping(value = "/check-creds", method = RequestMethod.POST)
+    @RequestMapping(value = "/check-credentials", method = RequestMethod.POST)
     public boolean checkCredentials(@RequestBody LoginRequestDto loginRequestDto) {
-        return this.authService.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword())).isAuthenticated();
+        return this.authManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword())).isAuthenticated();
     }
 }
