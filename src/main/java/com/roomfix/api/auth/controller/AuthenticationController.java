@@ -65,7 +65,7 @@ public class AuthenticationController {
     public ResponseEntity<?> checkCredentials(@RequestBody LoginRequestDto loginRequestDto) {
         try {
             this.authManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    loginRequestDto.getUsername(),
+                    loginRequestDto.getMail(),
                     loginRequestDto.getPassword())).isAuthenticated();
             return ResponseEntity.ok("All good!");
         } catch (Exception e){
