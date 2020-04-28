@@ -51,7 +51,7 @@ public class FailureController {
         }
         if (deviceCategoryId != 0) {
             DeviceCategory deviceCategory = this.deviceCategoryRepository.findById(deviceCategoryId).orElseThrow(ResourceNotFoundException::new);
-           if (newFailure.getRoom().getDevicesCategories().contains(deviceCategory)){   //check if the device category is compatible with the room
+               if (newFailure.getRoom().getDevicesCategories().contains(deviceCategory)){   //check if the device category is compatible with the room
                 newFailure.setDeviceCategory(deviceCategory);
            } else throw new BadRequestException();
         }
@@ -60,11 +60,19 @@ public class FailureController {
             newFailure.setDescription(failureDescription);
         }
 
-        if (!failureTitle.isEmpty() && failureTitle.length()<101 ){
-            newFailure.setTitle(failureTitle);
-        } else throw new BadRequestException();
+
+
+        if (failureTitle.length()>=101){
+            newFailure.setTitle(failureTitle.substring(0,100));
+        } else{
+            if (!failureTitle.isEmpty()){
+                newFailure.setTitle(failureTitle);
+            }
+        }
+
         return this.failureRepository.save(newFailure);
     }
+
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
