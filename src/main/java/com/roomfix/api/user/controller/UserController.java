@@ -1,8 +1,10 @@
-package com.roomfix.api.user;
+package com.roomfix.api.user.controller;
 
 import java.util.List;
 
 import com.roomfix.api.common.exceptionhandling.exception.ResourceNotFoundException;
+import com.roomfix.api.user.entity.User;
+import com.roomfix.api.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,12 +34,6 @@ public class UserController {
         return user;
     }
 
-    @PostMapping("")
-    @ResponseStatus(HttpStatus.CREATED)
-    public User addUser(@RequestBody User newUser) {
-        return this.userRepository.save(newUser);
-    }
-
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public User deleteUserById(@PathVariable("id") long userId) {
@@ -45,5 +41,4 @@ public class UserController {
         this.userRepository.delete(userToDelete);
         return userToDelete;
     }
-
 }
