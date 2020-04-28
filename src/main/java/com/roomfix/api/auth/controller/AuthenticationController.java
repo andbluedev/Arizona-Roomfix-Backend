@@ -7,6 +7,9 @@ import com.roomfix.api.common.exceptionhandling.exception.BadRequestException;
 import com.roomfix.api.user.entity.User;
 import com.roomfix.api.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.regex.Matcher;
@@ -16,12 +19,14 @@ import java.util.regex.Pattern;
 @RequestMapping("/account")
 public class AuthenticationController {
     private UserRepository userRepository;
-    private AuthenticationService authUserService;
+    private PasswordEncoder passwordEncoder;
+    private AuthenticationManager authService;
 
     @Autowired
-    public AuthenticationController(UserRepository userRepository, AuthenticationService authUserService) {
+    public AuthenticationController(UserRepository userRepository, AuthenticationManager authUserService,  PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.authUserService = authUserService;
+        this.authService = authUserService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -38,7 +43,7 @@ public class AuthenticationController {
 
         User user = new User();
         user.setMail(userCreateDto.getMail());
-        user.setPassword(authUserService.encodePassword(userCreateDto.getPassword()));
+        user.setPassword(passwordEncoder.encode(userCreateDto.getPassword()));
 
         return userRepository.save(user);
     }
@@ -46,6 +51,6 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/check-creds", method = RequestMethod.POST)
     public boolean checkCredentials(@RequestBody LoginRequestDto loginRequestDto) {
-        return this.authUserService.credentialsValid(loginRequestDto.getUsername(), loginRequestDto.getPassword());
+        return this.authService.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword())).isAuthenticated();
     }
 }

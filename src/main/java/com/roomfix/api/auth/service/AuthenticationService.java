@@ -15,11 +15,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationService implements UserDetailsService {
-
     private UserRepository userRepository;
     private AuthenticationManager authenticationManager;
     private PasswordEncoder passwordEncoder;
-
 
     @Autowired
     public AuthenticationService(UserRepository userRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
@@ -37,15 +35,6 @@ public class AuthenticationService implements UserDetailsService {
         return user;
     }
 
-    public boolean credentialsValid(String email, String password) {
-        try {
-            this.authenticate(email, password);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
 
 
 
@@ -59,8 +48,6 @@ public class AuthenticationService implements UserDetailsService {
         }
     }
 
-    public String encodePassword(String passwordToEncode) {
-        return  passwordEncoder.encode(passwordToEncode);
-    }
+
 
 }
