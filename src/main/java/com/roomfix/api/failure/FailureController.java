@@ -1,5 +1,6 @@
 package com.roomfix.api.failure;
 
+import com.roomfix.api.common.exceptionhandling.exception.BadRequestException;
 import com.roomfix.api.common.exceptionhandling.exception.ResourceNotFoundException;
 import com.roomfix.api.device.category.DeviceCategory;
 import com.roomfix.api.device.category.DeviceCategoryRepository;
@@ -7,6 +8,7 @@ import com.roomfix.api.room.Room;
 import com.roomfix.api.room.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,7 +53,7 @@ public class FailureController {
             DeviceCategory deviceCategory = this.deviceCategoryRepository.findById(deviceCategoryId).orElseThrow(ResourceNotFoundException::new);
             if (newFailure.getRoom().getDevicesCategories().contains(deviceCategory)){    //check if the device category is compatible with the room
                 newFailure.setDeviceCategory(deviceCategory);
-            }
+            } else throw new BadRequestException();
         }
 
 
