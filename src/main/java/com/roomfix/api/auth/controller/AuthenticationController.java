@@ -35,7 +35,7 @@ public class AuthenticationController {
         this.modelMapper = modelMapper;
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @PostMapping("/register")
     public LoginResponseDto register(@RequestBody UserCreateDto userCreateDto) {
         // checking Mail format
         final Pattern pattern = Pattern.compile("^(.+)@isep.fr$");
@@ -61,7 +61,7 @@ public class AuthenticationController {
         return response;
     }
 
-    @RequestMapping(value = "/check-credentials", method = RequestMethod.POST)
+    @PostMapping("/check-credentials")
     public ResponseEntity<?> checkCredentials(@RequestBody LoginRequestDto loginRequestDto) {
         try {
             this.authManager.authenticate(new UsernamePasswordAuthenticationToken(
