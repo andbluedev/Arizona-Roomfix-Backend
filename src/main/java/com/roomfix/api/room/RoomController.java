@@ -34,6 +34,13 @@ public class RoomController {
         return this.roomRepository.findById(roomId).orElseThrow(ResourceNotFoundException::new);
     }
 
+    @GetMapping("/{building_id}/with-failures")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Room> getRoomsOfBuildingWithFailures(@PathVariable("building_id") long buildingId) {
+        Building building = this.buildingRepository.findById(buildingId).orElseThrow(ResourceNotFoundException::new);
+        return building.getRooms();
+    }
+
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public Room addRoom(@RequestBody Room newRoom, @RequestParam("buildingId") long buildingId) {

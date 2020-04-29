@@ -155,14 +155,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8000/buildings/1",
+							"raw": "localhost:8000/buildings/2",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
 								"buildings",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -277,6 +277,26 @@
 							"path": [
 								"rooms",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get rooms of building with failures",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/rooms/2/with-failures",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"rooms",
+								"2",
+								"with-failures"
 							]
 						}
 					},
