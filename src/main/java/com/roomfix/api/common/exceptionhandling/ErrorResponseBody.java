@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-public class ErrorResponseBody extends Exception {
+public class ErrorResponseBody extends RuntimeException {
     private LocalDateTime timestamp;
     private HttpStatus status;
     private String message;
@@ -40,9 +40,20 @@ public class ErrorResponseBody extends Exception {
      * @return The {@link ResponseEntity} object containing th current object
      */
     public ResponseEntity<ErrorResponseBody> toResponseEntity() {
-        return new ResponseEntity<>(
-                this,
+        ResponseDto responseDto = new ResponseDto();
+
+        responseDto.message = this.message;
+        responseDto.statusCode = this.status;
+        responseDto.timestamp = this.timestamp;
+        return new ResponseEntity(
+                responseDto,
                 this.getStatus()
         );
+    }
+
+    class ResponseDto {
+        public String message;
+        public HttpStatus statusCode;
+        public LocalDateTime timestamp;
     }
 }

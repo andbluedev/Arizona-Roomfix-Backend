@@ -1,4 +1,4 @@
-package com.roomfix.api.user;
+package com.roomfix.api.user.entity;
 
 public enum UserRole {
     TEACHER,
