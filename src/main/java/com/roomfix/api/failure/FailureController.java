@@ -51,20 +51,20 @@ public class FailureController {
         }
         if (deviceCategoryId != 0) {
             DeviceCategory deviceCategory = this.deviceCategoryRepository.findById(deviceCategoryId).orElseThrow(ResourceNotFoundException::new);
-             //  if (newFailure.getRoom().getDevicesCategories().contains(deviceCategory)){   //check if the device category is compatible with the room
+               if (newFailure.getRoom().getDevicesCategories().contains(deviceCategory)){   //check if the device category is compatible with the room
                 newFailure.setDeviceCategory(deviceCategory);
-         //  } else throw new BadRequestException();
+           } else throw new BadRequestException();
         }
 
 
         if (newFailure.getTitle().isEmpty()){
             newFailure.setTitle("Untitled Failure #"+ newFailure.getId());
         }
-         else{
-            if (newFailure.getTitle().length()>=101){
-                newFailure.setTitle(newFailure.getTitle().substring(0,100));
-            }
+         else if (newFailure.getTitle().length()>=101){
+            newFailure.setTitle(newFailure.getTitle().substring(0,100));
         }
+
+
 
         return this.failureRepository.save(newFailure);
     }
