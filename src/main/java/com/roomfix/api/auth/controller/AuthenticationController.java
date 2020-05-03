@@ -9,6 +9,7 @@ import com.roomfix.api.common.exceptionhandling.exception.InternalServerErrorExc
 import com.roomfix.api.common.exceptionhandling.exception.UnauthorizedException;
 import com.roomfix.api.user.entity.User;
 import com.roomfix.api.user.entity.UserRole;
+import lombok.var;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import com.roomfix.api.user.repository.UserRepository;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -92,13 +94,19 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping("/check-credentials")
-    public ResponseEntity<?> checkCredentials(@RequestBody LoginRequestDto loginRequestDto) {
+    @GetMapping("/me")
+    public LoginResponseDto checkCredentials() {
         try {
-            this.authenticate(loginRequestDto.getMail(), loginRequestDto.getPassword());
-            return ResponseEntity.ok("All good!");
+            // gets the email from the JWT token in the Authorization Header
+            var contextUsername = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            final User user = userRepository.findByMail(contextUsername.toString());
+
+            LoginResponseDto response = new LoginResponseDto();
+            this.modelMapper.map(user, response);
+            return response;
+
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Account and/or Credentials.");
+            throw new UnauthorizedException("Invalid Token");
         }
     }
 
