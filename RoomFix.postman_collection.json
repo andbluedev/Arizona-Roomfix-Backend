@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "decd62de-9d7b-4de6-8559-b01eb1157e9a",
+		"_postman_id": "2b26101f-d5c3-48fb-a560-984ca1256c94",
 		"name": "RoomFix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -529,13 +529,16 @@
 					"response": []
 				},
 				{
-					"name": "Check credentials",
+					"name": "me (who am I)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"mail\": \"bob@isep.fr\", \n\t\"password\": \"test\"\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -543,14 +546,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8000/account/check-credentials",
+							"raw": "localhost:8000/account/me",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
 								"account",
-								"check-credentials"
+								"me"
 							]
 						}
 					},
@@ -571,14 +574,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8000/account/login",
+							"raw": "localhost:8000/account/me",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
 								"account",
-								"login"
+								"me"
 							]
 						}
 					},
@@ -593,7 +596,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJib2JAaXNlcC5mciIsImV4cCI6MTU4ODY5ODA1MCwiaWF0IjoxNTg4MzM4MDUwfQ.AUFTRB17IqOYKwVzhRclkohwO8bBlWIlIk3EetfFmySAd4ngoS6f9M2PprUiv1faQmQ8y0HDUR8vvgyvUFAoug",
+				"value": "",
 				"type": "string"
 			}
 		]
@@ -602,7 +605,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "6a3af277-70bd-49fe-a60e-e49426d98af9",
+				"id": "af9ed0b7-7331-481d-8ea4-3f5939082ef7",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -612,7 +615,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "b42d40e6-cc18-4620-b3b3-43d02ae68417",
+				"id": "4c502ed5-2d1f-4177-bd03-df719a490ec5",
 				"type": "text/javascript",
 				"exec": [
 					""
