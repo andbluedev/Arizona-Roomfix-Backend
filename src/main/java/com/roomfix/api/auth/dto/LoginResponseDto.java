@@ -10,5 +10,5 @@ public class LoginResponseDto {
     private String name;
     private String lastname;
     private UserRole role;
-    private String token= "NO JWT TOKEN AT THE MOMENT";
+    private String token;
 }

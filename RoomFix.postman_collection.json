@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d94296a7-016c-4055-be29-b6a639387f34",
+		"_postman_id": "2b26101f-d5c3-48fb-a560-984ca1256c94",
 		"name": "RoomFix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -529,13 +529,16 @@
 					"response": []
 				},
 				{
-					"name": "Check credentials",
+					"name": "me (who am I)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"mail\": \"bob@isep.fr\", \n\t\"password\": \"test\"\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -543,14 +546,42 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8000/account/check-credentials",
+							"raw": "localhost:8000/account/me",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
 								"account",
-								"check-credentials"
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mail\": \"bob@isep.fr\", \n\t\"password\": \"test\"\n\t\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/account/me",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"account",
+								"me"
 							]
 						}
 					},
@@ -565,7 +596,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJNYXRtYXQiLCJleHAiOjE1Nzk4NzY4NTIsImlhdCI6MTU3OTUxNjg1Mn0.YGhvIsF03bZurg6sVq4J_PZz-VI9j41kuxEycPiewO_wSnqr0FQZbQgQ5RLpU3zuuUQ6SpguHFTak1FmstpQgg",
+				"value": "",
 				"type": "string"
 			}
 		]
@@ -574,7 +605,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "f41b10ab-3059-4e34-adc2-b0bf953ff8a3",
+				"id": "af9ed0b7-7331-481d-8ea4-3f5939082ef7",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -584,7 +615,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "f6212ef1-65ff-4d6c-98c3-67c72202f24d",
+				"id": "4c502ed5-2d1f-4177-bd03-df719a490ec5",
 				"type": "text/javascript",
 				"exec": [
 					""
