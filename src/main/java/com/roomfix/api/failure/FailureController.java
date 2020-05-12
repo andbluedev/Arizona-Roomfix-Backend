@@ -41,9 +41,6 @@ public class FailureController {
         listFailures.removeIf(failure -> failure.getState() == FailureState.CLOSED || failure.getState() == FailureState.USELESS);
 
         return listFailures;
-
-
-
     }
 
 
