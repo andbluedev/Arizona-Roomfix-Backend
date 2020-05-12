@@ -328,14 +328,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8000/rooms//device/categories",
+							"raw": "localhost:8000/rooms/1/device/categories",
 							"host": [
 								"localhost"
 							],
 							"port": "8000",
 							"path": [
 								"rooms",
-								"",
+								"1",
 								"device",
 								"categories"
 							]
