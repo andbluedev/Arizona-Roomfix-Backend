@@ -6,9 +6,12 @@ import com.roomfix.api.device.category.DeviceCategory;
 import com.roomfix.api.device.category.DeviceCategoryRepository;
 import com.roomfix.api.room.Room;
 import com.roomfix.api.room.RoomRepository;
+import com.roomfix.api.user.entity.User;
 import com.roomfix.api.user.repository.UserRepository;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +47,7 @@ public class FailureController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Failure addFailure(@RequestBody Failure newFailure, @RequestParam("roomId") long roomId, @RequestParam("deviceCategoryId") long deviceCategoryId, @RequestParam("userId") long userId ) {
+    public Failure addFailure(@RequestBody Failure newFailure, @RequestParam("roomId") long roomId, @RequestParam("deviceCategoryId") long deviceCategoryId) {
         if (roomId != 0) {
             Room room = this.roomRepository.findById(roomId).orElseThrow(ResourceNotFoundException::new);
             newFailure.setRoom(room);
@@ -64,7 +67,9 @@ public class FailureController {
             newFailure.setTitle(newFailure.getTitle().substring(0,100));
         }
 
-        // newFailure.setUser(this.userRepository.findById(userId).orElseThrow(ResourceNotFoundException::new));
+        var contextUsername = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final User user = this.userRepository.findByMail(contextUsername.toString());
+        newFailure.setUser(user);
 
         return this.failureRepository.save(newFailure);
     }
