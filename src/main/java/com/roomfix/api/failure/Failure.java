@@ -3,6 +3,7 @@ package com.roomfix.api.failure;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.roomfix.api.device.category.DeviceCategory;
 import com.roomfix.api.room.Room;
+import com.roomfix.api.user.entity.User;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
@@ -37,4 +38,7 @@ public class Failure {
 
     @ManyToOne
     private DeviceCategory deviceCategory;
+
+    @ManyToOne
+    private User user;
 }
