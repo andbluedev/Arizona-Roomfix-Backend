@@ -38,6 +38,12 @@ public class RoomController {
         return this.roomRepository.findById(roomId).orElseThrow(ResourceNotFoundException::new);
     }
 
+    @GetMapping("/{id}/failures")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Failure> getFailuresbyRoom(@PathVariable("id") long roomId) {
+        Room room = getRoomById(roomId);
+        return room.getFailures();
+    }
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
