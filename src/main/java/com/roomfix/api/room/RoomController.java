@@ -38,11 +38,11 @@ public class RoomController {
         return this.roomRepository.findById(roomId).orElseThrow(ResourceNotFoundException::new);
     }
 
-    @GetMapping("/{id}/failures")
+    @GetMapping("/{building_id}/with-failures")
     @ResponseStatus(HttpStatus.OK)
-    public List<Failure> getFailuresbyRoom(@PathVariable("id") long roomId) {
-        Room room = getRoomById(roomId);
-        return room.getFailures();
+    public List<Room> getRoomsOfBuildingWithFailures(@PathVariable("building_id") long buildingId) {
+        Building building = this.buildingRepository.findById(buildingId).orElseThrow(ResourceNotFoundException::new);
+        return building.getRooms();
     }
 
     @PostMapping("")
@@ -60,5 +60,8 @@ public class RoomController {
         this.roomRepository.delete(roomToDelete);
         return roomToDelete;
     }
+
+
+
 
 }
