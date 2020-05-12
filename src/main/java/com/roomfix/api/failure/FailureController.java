@@ -36,6 +36,20 @@ public class FailureController {
         return this.failureRepository.findAll();
     }
 
+    @GetMapping("/room{roomId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Failure> getFailuresByRoom(@PathVariable("roomId") long roomId) {
+
+        Room room = this.roomRepository.findById(roomId).orElseThrow(ResourceNotFoundException::new);
+        List<Failure> listFailures = room.getFailures();
+        listFailures.removeIf(failure -> failure.getState() == FailureState.CLOSED || failure.getState() == FailureState.USELESS);
+
+        return listFailures;
+    }
+
+
+
+
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Failure getFailureById(@PathVariable("id") long failureId) {
