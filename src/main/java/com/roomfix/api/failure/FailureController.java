@@ -9,8 +9,10 @@ import com.roomfix.api.room.Room;
 import com.roomfix.api.room.RoomRepository;
 import com.roomfix.api.user.entity.User;
 import com.roomfix.api.user.repository.UserRepository;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,12 +24,14 @@ public class FailureController {
     private final FailureRepository failureRepository;
     private final RoomRepository roomRepository;
     private final DeviceCategoryRepository deviceCategoryRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public FailureController(FailureRepository failureRepository, RoomRepository roomRepository, DeviceCategoryRepository deviceCategoryRepository) {
+    public FailureController(FailureRepository failureRepository, RoomRepository roomRepository, DeviceCategoryRepository deviceCategoryRepository, UserRepository userRepository) {
         this.failureRepository = failureRepository;
         this.roomRepository = roomRepository;
         this.deviceCategoryRepository = deviceCategoryRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("")
@@ -95,14 +99,18 @@ public class FailureController {
 
     @PutMapping("/upvote")
     @ResponseStatus(HttpStatus.OK)
-    public Failure addUpvote(@EntityExists @RequestParam("failureId") Failure failure , @EntityExists @RequestParam("userId") User user ) {
+    public Failure addUpvote(@EntityExists @RequestParam("failureId") Failure failure) {
+        var contextUsername = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final User user = this.userRepository.findByMail(contextUsername.toString());
         failure.addUpvoter(user);
         return this.failureRepository.save(failure);
     }
 
     @PutMapping("/upvote/remove")
     @ResponseStatus(HttpStatus.OK)
-    public Failure removeUpvote(@EntityExists @RequestParam("failureId") Failure failure , @EntityExists @RequestParam("userId") User user ) {
+    public Failure removeUpvote(@EntityExists @RequestParam("failureId") Failure failure) {
+        var contextUsername = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final User user = this.userRepository.findByMail(contextUsername.toString());
         failure.removeUpvoter(user);
         return this.failureRepository.save(failure);
     }
