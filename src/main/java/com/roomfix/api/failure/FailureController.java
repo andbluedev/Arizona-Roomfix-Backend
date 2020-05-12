@@ -38,8 +38,11 @@ public class FailureController {
 
         Room room = this.roomRepository.findById(roomId).orElseThrow(ResourceNotFoundException::new);
         List<Failure> listFailures = room.getFailures();
-        listFailures.removeIf(failure -> failure.getState() != FailureState.UN_RESOLVED || failure.getState() != FailureState.ONGOING);
+        listFailures.removeIf(failure -> failure.getState() == FailureState.CLOSED || failure.getState() == FailureState.USELESS);
+
         return listFailures;
+
+
 
     }
 
