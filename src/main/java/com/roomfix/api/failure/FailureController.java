@@ -1,18 +1,19 @@
 package com.roomfix.api.failure;
 
+import com.roomfix.api.common.exceptionhandling.entityExists.EntityExists;
 import com.roomfix.api.common.exceptionhandling.exception.BadRequestException;
 import com.roomfix.api.common.exceptionhandling.exception.ResourceNotFoundException;
 import com.roomfix.api.device.category.DeviceCategory;
 import com.roomfix.api.device.category.DeviceCategoryRepository;
 import com.roomfix.api.room.Room;
 import com.roomfix.api.room.RoomRepository;
+import com.roomfix.api.user.entity.User;
+import com.roomfix.api.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/failures")
@@ -76,5 +77,19 @@ public class FailureController {
         Failure failureToDelete = this.failureRepository.findById(failureId).orElseThrow(ResourceNotFoundException::new);
         this.failureRepository.delete(failureToDelete);
         return failureToDelete;
+    }
+
+    @PutMapping("/upvote")
+    @ResponseStatus(HttpStatus.OK)
+    public Failure addUpvote(@EntityExists @RequestParam("failureId") Failure failure , @EntityExists @RequestParam("userId") User user ) {
+        failure.addUpvoter(user);
+        return this.failureRepository.save(failure);
+    }
+
+    @PutMapping("/upvote/remove")
+    @ResponseStatus(HttpStatus.OK)
+    public Failure removeUpvote(@EntityExists @RequestParam("failureId") Failure failure , @EntityExists @RequestParam("userId") User user ) {
+        failure.removeUpvoter(user);
+        return this.failureRepository.save(failure);
     }
 }
