@@ -3,12 +3,13 @@ package com.roomfix.api.failure;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.roomfix.api.device.category.DeviceCategory;
 import com.roomfix.api.room.Room;
+import com.roomfix.api.user.entity.User;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "failures")
@@ -35,6 +36,25 @@ public class Failure {
     @ManyToOne
     private Room room;
 
+
+    @ManyToOne
+    private User user;
+
+
     @ManyToOne
     private DeviceCategory deviceCategory;
+
+    @ManyToMany
+    @JoinTable(name = "upvote",
+            joinColumns = @JoinColumn(name = "failure_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> upvoters;
+
+    public void addUpvoter(User upvoter) {
+        if (!this.upvoters.contains(upvoter)) this.upvoters.add(upvoter);
+    }
+
+    public void removeUpvoter(User upvoter) {
+        this.upvoters.remove(upvoter);
+    }
 }

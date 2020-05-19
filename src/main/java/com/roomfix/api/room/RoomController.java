@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.roomfix.api.failure.FailureState.ONGOING;
-import static com.roomfix.api.failure.FailureState.UN_RESOLVED;
 
 @RestController
 @RequestMapping("/rooms")
@@ -90,7 +88,10 @@ public class RoomController {
         return roomToDelete;
     }
 
-
-
-
+    @GetMapping("/{id}/device/categories")
+    @ResponseStatus(HttpStatus.OK)
+    public List<DeviceCategory> getRoomDeviceCategories(@PathVariable("id") long roomId) {
+        Room room = this.roomRepository.findById(roomId).orElseThrow(ResourceNotFoundException::new);
+        return room.getDevicesCategories();
+    }
 }
