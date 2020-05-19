@@ -3,15 +3,13 @@ package com.roomfix.api.room;
 import com.roomfix.api.building.Building;
 import com.roomfix.api.building.BuildingRepository;
 import com.roomfix.api.common.exceptionhandling.exception.ResourceNotFoundException;
-import com.roomfix.api.failure.Failure;
+import com.roomfix.api.device.category.DeviceCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.roomfix.api.failure.FailureState.ONGOING;
-import static com.roomfix.api.failure.FailureState.UN_RESOLVED;
 
 @RestController
 @RequestMapping("/rooms")
