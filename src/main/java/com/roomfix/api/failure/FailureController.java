@@ -15,6 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.EnumSet;
 import java.util.List;
 
 @RestController
@@ -40,7 +43,7 @@ public class FailureController {
         return this.failureRepository.findAll();
     }
 
-    @GetMapping("/room{roomId}")
+    @GetMapping("/room/{roomId}")
     @ResponseStatus(HttpStatus.OK)
     public List<Failure> getFailuresByRoom(@PathVariable("roomId") long roomId) {
 
@@ -51,9 +54,6 @@ public class FailureController {
         return listFailures;
     }
 
-
-
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Failure getFailureById(@PathVariable("id") long failureId) {
@@ -62,12 +62,13 @@ public class FailureController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Failure addFailure(@RequestBody Failure newFailure, @RequestParam("roomId") long roomId, @RequestParam("deviceCategoryId") long deviceCategoryId ) {
+    public Failure addFailure(@RequestBody Failure newFailure, @RequestParam("roomId") long roomId, @RequestParam("deviceCategoryId") long deviceCategoryId) {
         if (roomId != 0) {
             Room room = this.roomRepository.findById(roomId).orElseThrow(ResourceNotFoundException::new);
             newFailure.setRoom(room);
 
         }
+
         if (deviceCategoryId != 0) {
             DeviceCategory deviceCategory = this.deviceCategoryRepository.findById(deviceCategoryId).orElseThrow(ResourceNotFoundException::new);
                if (newFailure.getRoom().getDevicesCategories().contains(deviceCategory)){   //check if the device category is compatible with the room
@@ -75,19 +76,18 @@ public class FailureController {
            } else throw new BadRequestException();
         }
 
-
         if (newFailure.getTitle().isEmpty()){
             newFailure.setTitle("Untitled Failure #"+ newFailure.getId());
-        }
-         else if (newFailure.getTitle().length()>=101){
+        } else if (newFailure.getTitle().length()>=101){
             newFailure.setTitle(newFailure.getTitle().substring(0,100));
         }
 
-
+        var contextUsername = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final User user = this.userRepository.findByMail(contextUsername.toString());
+        newFailure.setUser(user);
 
         return this.failureRepository.save(newFailure);
     }
-
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
