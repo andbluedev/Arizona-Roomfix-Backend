@@ -52,7 +52,10 @@ Runner le conteneur sur le port 8080 de la machine (accessible sur le port 8080 
 
 ```
 docker run <image-roomfix-api> -p 8080:8000 -e DB_URL=<database-user>:<database-password>@<database-url>:3306/roomfix
+
+
 ```
+
 
 Par exemple:
 ```

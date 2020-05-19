@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "47807cb8-26f3-4d78-b7f9-5631be448f8b",
+		"_postman_id": "f456e209-1bd9-43e1-bf71-7a0194c3ee5b",
 		"name": "RoomFix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -186,6 +186,26 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "get by building id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/buildings/2/rooms",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"buildings",
+								"2",
+								"rooms"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -297,6 +317,27 @@
 								"rooms",
 								"2",
 								"with-failures"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Room Device Categorie",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/rooms/1/device/categories",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"rooms",
+								"1",
+								"device",
+								"categories"
 							]
 						}
 					},
@@ -612,8 +653,11 @@
 				},
 				{
 					"name": "Login",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -647,7 +691,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJib2JAaXNlcC5mciIsImV4cCI6MTU4OTY1MjE4OCwiaWF0IjoxNTg5MjkyMTg4fQ.LPCxD3dc0sVdY4QKeVDf_SlsXEeg48nRN2o0repDs-j7VUz64qGcKcPY2A-OvKhye68yF8Ivazs-8Y6OwUmiyg",
 				"type": "string"
 			}
 		]
@@ -656,7 +700,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "f26a517d-6a1f-4da3-a63c-a2507006fbbc",
+				"id": "a0797860-6223-44e1-aa50-cabee2655e36",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -666,7 +710,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "7d8e498f-adcf-44b2-80d4-a7bbd42fd9d0",
+				"id": "08dff5c3-9a8e-4f10-a681-e53c722547df",
 				"type": "text/javascript",
 				"exec": [
 					""

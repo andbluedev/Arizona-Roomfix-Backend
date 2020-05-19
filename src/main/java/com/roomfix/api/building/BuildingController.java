@@ -1,6 +1,8 @@
 package com.roomfix.api.building;
 
 import com.roomfix.api.common.exceptionhandling.exception.ResourceNotFoundException;
+import com.roomfix.api.room.Room;
+import com.roomfix.api.room.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +14,12 @@ import java.util.List;
 public class BuildingController {
 
     private final BuildingRepository buildingRepository;
+    private final RoomRepository roomRepository;
 
     @Autowired
-    public BuildingController(BuildingRepository buildingRepository) {
+    public BuildingController(BuildingRepository buildingRepository, RoomRepository roomRepository) {
         this.buildingRepository = buildingRepository;
+        this.roomRepository = roomRepository;
     }
 
     @GetMapping("")
@@ -44,4 +48,9 @@ public class BuildingController {
         return buildingToDelete;
     }
 
+    @GetMapping("/{id}/rooms")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Room> getRoomsByBuilding(@PathVariable("id") long buildingId) {
+        return this.roomRepository.findAllByBuildingId(buildingId);
+    }
 }
