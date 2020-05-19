@@ -72,9 +72,19 @@ public class RoomController {
 
         } else throw new BadRequestException("Room already contains this device category");
 
+    }
 
+    @PutMapping("/{id}/removedevice")
+    public Room removeDeviceCategoryFromRoom(@RequestParam("deviceCategoryId") long deviceCategoryId,@PathVariable("id") long roomId){
+        Room room = this.roomRepository.findById(roomId).orElseThrow(ResourceNotFoundException::new);
+        List<DeviceCategory> deviceCategoryList = room.getDevicesCategories();
+        DeviceCategory deviceCategory = this.deviceCategoryRepository.findById(deviceCategoryId).orElseThrow(ResourceNotFoundException::new);
 
-
+        if (deviceCategoryList.contains(deviceCategory)){
+            deviceCategoryList.remove(deviceCategory);
+            room.setDevicesCategories(deviceCategoryList);
+            return this.roomRepository.save(room);
+        } else throw new BadRequestException("Room doesn't contain this device category");
 
     }
 
