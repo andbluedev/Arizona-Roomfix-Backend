@@ -36,6 +36,11 @@ public class Failure {
     @ManyToOne
     private Room room;
 
+
+    @ManyToOne
+    private User user;
+
+
     @ManyToOne
     private DeviceCategory deviceCategory;
 
