@@ -2,6 +2,7 @@ package com.roomfix.api.room;
 
 import com.roomfix.api.building.Building;
 import com.roomfix.api.building.BuildingRepository;
+import com.roomfix.api.common.exceptionhandling.exception.BadRequestException;
 import com.roomfix.api.common.exceptionhandling.exception.ResourceNotFoundException;
 import com.roomfix.api.device.category.DeviceCategory;
 import com.roomfix.api.device.category.DeviceCategoryRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,16 +63,20 @@ public class RoomController {
 
     @PostMapping("/{id}/newdevice")
     @ResponseStatus(HttpStatus.CREATED)
-    public DeviceCategory addDeviceCategoryToRoom(@RequestBody DeviceCategory newDeviceCategory,@PathVariable("id") long roomId, @RequestParam("deviceCategoryId") long deviceCategoryId){
+    public Room addDeviceCategoryToRoom(@RequestParam("deviceCategoryId") long deviceCategoryId,@PathVariable("id") long roomId){
         Room room = this.roomRepository.findById(roomId).orElseThrow(ResourceNotFoundException::new);
-        List<DeviceCategory> newDevices = room.getDevicesCategories();
-        DeviceCategory newDevice = this.deviceCategoryRepository.findById(deviceCategoryId).orElseThrow(ResourceNotFoundException::new);
-        if (!newDevices.contains(deviceCategoryId)){
-            newDevices.add(newDevice);
-            room.setDevicesCategories(newDevices);
-        }
+        List<DeviceCategory> deviceCategoryList = room.getDevicesCategories();
+        DeviceCategory deviceCategory = this.deviceCategoryRepository.findById(deviceCategoryId).orElseThrow(ResourceNotFoundException::new);
+        if (!deviceCategoryList.contains(deviceCategory)){
+            deviceCategoryList.add(deviceCategory);
+            room.setDevicesCategories(deviceCategoryList);
+            return this.roomRepository.save(room);
 
-        return this.deviceCategoryRepository.save(newDeviceCategory);
+        } else throw new BadRequestException("Room already contains this device category");
+
+
+
+
 
     }
 
