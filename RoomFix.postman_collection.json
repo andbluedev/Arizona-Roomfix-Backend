@@ -441,6 +441,57 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "add upvote",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/failures/upvote?failureId=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"failures",
+								"upvote"
+							],
+							"query": [
+								{
+									"key": "failureId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove upvote",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/failures/upvote/remove?failureId=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"failures",
+								"upvote",
+								"remove"
+							],
+							"query": [
+								{
+									"key": "failureId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -474,7 +525,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Projecteur\"\n}",
+							"raw": "{\n\t\"name\": \"Ampoule\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
