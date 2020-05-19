@@ -1,5 +1,7 @@
 package com.roomfix.api.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.roomfix.api.failure.Failure;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 
 @Entity
@@ -30,6 +33,10 @@ public class User implements UserDetails {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Failure> failures;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
