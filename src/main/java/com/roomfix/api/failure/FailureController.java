@@ -97,26 +97,21 @@ public class FailureController {
         return failureToDelete;
     }
 
-    @PutMapping("/state")
+    @PutMapping("/upvote")
     @ResponseStatus(HttpStatus.OK)
-    public Failure setStateOfFailure(@EntityExists @RequestParam("failureId") Failure failure, @RequestParam("newState") String newState) {
+    public Failure addUpvote(@EntityExists @RequestParam("failureId") Failure failure) {
+        var contextUsername = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final User user = this.userRepository.findByMail(contextUsername.toString());
+        failure.addUpvoter(user);
+        return this.failureRepository.save(failure);
+    }
 
-        if (FailureState.valueOf(newState) == FailureState.CLOSED || FailureState.valueOf(newState) == FailureState.USELESS) {
-            if (failure.getState() == FailureState.UN_RESOLVED || failure.getState() == FailureState.ONGOING) {
-                failure.setEndedAt(LocalDateTime.now());
-            }
-        } else if (FailureState.valueOf(newState) == FailureState.UN_RESOLVED || FailureState.valueOf(newState) == FailureState.ONGOING) {
-            if (failure.getState() == FailureState.CLOSED || failure.getState() == FailureState.USELESS) {
-                failure.setEndedAt(null);
-            }
-        }
-
-        try {
-            failure.setState(FailureState.valueOf(newState));
-        } catch (IllegalArgumentException ex) {
-            throw new IllegalArgumentException(ex);
-        }
-
-        return failure;
+    @PutMapping("/upvote/remove")
+    @ResponseStatus(HttpStatus.OK)
+    public Failure removeUpvote(@EntityExists @RequestParam("failureId") Failure failure) {
+        var contextUsername = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final User user = this.userRepository.findByMail(contextUsername.toString());
+        failure.removeUpvoter(user);
+        return this.failureRepository.save(failure);
     }
 }

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2b26101f-d5c3-48fb-a560-984ca1256c94",
+		"_postman_id": "47807cb8-26f3-4d78-b7f9-5631be448f8b",
 		"name": "RoomFix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -400,6 +400,57 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "add upvote",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/failures/upvote?failureId=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"failures",
+								"upvote"
+							],
+							"query": [
+								{
+									"key": "failureId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove upvote",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/failures/upvote/remove?failureId=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"failures",
+								"upvote",
+								"remove"
+							],
+							"query": [
+								{
+									"key": "failureId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -433,7 +484,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Projecteur\"\n}",
+							"raw": "{\n\t\"name\": \"Ampoule\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -605,7 +656,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "af9ed0b7-7331-481d-8ea4-3f5939082ef7",
+				"id": "f26a517d-6a1f-4da3-a63c-a2507006fbbc",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -615,7 +666,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "4c502ed5-2d1f-4177-bd03-df719a490ec5",
+				"id": "7d8e498f-adcf-44b2-80d4-a7bbd42fd9d0",
 				"type": "text/javascript",
 				"exec": [
 					""
