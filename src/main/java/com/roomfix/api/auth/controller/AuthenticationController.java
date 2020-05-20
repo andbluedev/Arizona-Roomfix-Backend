@@ -10,6 +10,8 @@ import com.roomfix.api.common.exceptionhandling.exception.UnauthorizedException;
 import com.roomfix.api.user.entity.User;
 import com.roomfix.api.user.entity.UserRole;
 import lombok.var;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import com.roomfix.api.user.repository.UserRepository;
@@ -33,15 +35,17 @@ public class AuthenticationController {
     private AuthenticationManager authManager;
     private JwtUtil jwtTokenUtil;
     private ModelMapper modelMapper;
+    private JavaMailSender emailSender;
 
     @Autowired
     public AuthenticationController(UserRepository userRepository, AuthenticationManager authUserService,
-                                    PasswordEncoder passwordEncoder, ModelMapper modelMapper, JwtUtil jwtTokenUtil) {
+                                    PasswordEncoder passwordEncoder, ModelMapper modelMapper, JwtUtil jwtTokenUtil, JavaMailSender emailSender) {
         this.userRepository = userRepository;
         this.authManager = authUserService;
         this.passwordEncoder = passwordEncoder;
         this.modelMapper = modelMapper;
         this.jwtTokenUtil = jwtTokenUtil;
+        this.emailSender = emailSender;
     }
 
     @PostMapping("/register")
@@ -65,6 +69,12 @@ public class AuthenticationController {
         user.setMail(userCreateDto.getMail());
         user.setRole(UserRole.STUDENT);
         user.setPassword(passwordEncoder.encode(userCreateDto.getPassword()));
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(user.getMail());
+        message.setSubject("Inscription Roomfix");
+        message.setText("Bienvenue " + user.getUsername() + ", tu as bien été inscrit sur l'application RoomFix !");
+        this.emailSender.send(message);
 
         this.modelMapper.map(userRepository.save(user), response);
         return response;
