@@ -73,7 +73,7 @@ public class AuthenticationController {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(user.getMail());
         message.setSubject("Inscription Roomfix");
-        message.setText("Bienvenue " + user.getName() + ", tu as bien été inscrit sur l'application RoomFix !");
+        message.setText("Bienvenue " + user.getUsername() + ", tu as bien été inscrit sur l'application RoomFix !");
         this.emailSender.send(message);
 
         this.modelMapper.map(userRepository.save(user), response);
