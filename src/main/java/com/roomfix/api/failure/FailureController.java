@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -93,6 +94,30 @@ public class FailureController {
         this.failureRepository.delete(failureToDelete);
         return failureToDelete;
     }
+
+    @PutMapping("/state")
+    @ResponseStatus(HttpStatus.OK)
+    public Failure setStateOfFailure(@EntityExists @RequestParam("failureId") Failure failure, @RequestParam("newState") String newState) {
+
+        if (FailureState.valueOf(newState) == FailureState.CLOSED || FailureState.valueOf(newState) == FailureState.USELESS) {
+            if (failure.getState() == FailureState.UN_RESOLVED || failure.getState() == FailureState.ONGOING) {
+                failure.setEndedAt(LocalDateTime.now());
+            }
+        } else if (FailureState.valueOf(newState) == FailureState.UN_RESOLVED || FailureState.valueOf(newState) == FailureState.ONGOING) {
+            if (failure.getState() == FailureState.CLOSED || failure.getState() == FailureState.USELESS) {
+                failure.setEndedAt(null);
+            }
+        }
+
+        try {
+            failure.setState(FailureState.valueOf(newState));
+        } catch (IllegalArgumentException ex) {
+            throw new IllegalArgumentException(ex);
+        }
+
+        return failure;
+    }
+
 
     @PutMapping("/upvote")
     @ResponseStatus(HttpStatus.OK)

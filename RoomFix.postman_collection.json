@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f456e209-1bd9-43e1-bf71-7a0194c3ee5b",
+		"_postman_id": "a1c8a306-2182-4b7c-b664-036473c1b312",
 		"name": "RoomFix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -492,6 +492,35 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "change state",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/failures/state?failureId=1&newState=CLOSED",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"failures",
+								"state"
+							],
+							"query": [
+								{
+									"key": "failureId",
+									"value": "1"
+								},
+								{
+									"key": "newState",
+									"value": "CLOSED"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -691,7 +720,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJib2JAaXNlcC5mciIsImV4cCI6MTU4OTY1MjE4OCwiaWF0IjoxNTg5MjkyMTg4fQ.LPCxD3dc0sVdY4QKeVDf_SlsXEeg48nRN2o0repDs-j7VUz64qGcKcPY2A-OvKhye68yF8Ivazs-8Y6OwUmiyg",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsZW9wb2xkLmJhbmNhbEBpc2VwLmZyIiwiZXhwIjoxNTkwMjY0MDYzLCJpYXQiOjE1ODk5MDQwNjN9.5zTHsaiwN4hUxo5jDrfjepV8b_nuLmXgXgZqKudc5VWMB92JQRFC1VLn9jQMI8YHe_yRmbvp-g8_3o70vKgPhQ",
 				"type": "string"
 			}
 		]
@@ -700,7 +729,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "a0797860-6223-44e1-aa50-cabee2655e36",
+				"id": "b90e7245-5072-403c-8dbc-566c209bc77b",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -710,7 +739,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "08dff5c3-9a8e-4f10-a681-e53c722547df",
+				"id": "9f74d035-bb14-42e2-a802-33c0d1e9017a",
 				"type": "text/javascript",
 				"exec": [
 					""
