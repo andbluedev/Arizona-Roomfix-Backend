@@ -115,7 +115,7 @@ public class FailureController {
             throw new IllegalArgumentException(ex);
         }
 
-        return failure;
+        return this.failureRepository.save(failure);
     }
 
 
