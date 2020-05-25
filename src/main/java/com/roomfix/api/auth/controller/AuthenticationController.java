@@ -12,6 +12,7 @@ import com.roomfix.api.user.entity.UserRole;
 import lombok.var;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import com.roomfix.api.user.repository.UserRepository;
@@ -22,7 +23,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,16 +44,18 @@ public class AuthenticationController {
     private JwtUtil jwtTokenUtil;
     private ModelMapper modelMapper;
     private JavaMailSender emailSender;
+    private TemplateEngine templateEngine;
 
     @Autowired
     public AuthenticationController(UserRepository userRepository, AuthenticationManager authUserService,
-                                    PasswordEncoder passwordEncoder, ModelMapper modelMapper, JwtUtil jwtTokenUtil, JavaMailSender emailSender) {
+                                    PasswordEncoder passwordEncoder, ModelMapper modelMapper, JwtUtil jwtTokenUtil, JavaMailSender emailSender, TemplateEngine templateEngine) {
         this.userRepository = userRepository;
         this.authManager = authUserService;
         this.passwordEncoder = passwordEncoder;
         this.modelMapper = modelMapper;
         this.jwtTokenUtil = jwtTokenUtil;
         this.emailSender = emailSender;
+        this.templateEngine = templateEngine;
     }
 
     @PostMapping("/register")
@@ -70,11 +80,21 @@ public class AuthenticationController {
         user.setRole(UserRole.STUDENT);
         user.setPassword(passwordEncoder.encode(userCreateDto.getPassword()));
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(user.getMail());
-        message.setSubject("Inscription Roomfix");
-        message.setText("Bienvenue " + user.getUsername() + ", tu as bien été inscrit sur l'application RoomFix !");
-        this.emailSender.send(message);
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("mail", user.getMail());
+        final String templateFileName = "registrationEmailTemplate";
+        String mailTemplate = this.templateEngine.process(templateFileName, new Context(Locale.getDefault(), variables));
+
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        try {
+            helper.setTo(user.getMail());
+            helper.setSubject("Compte RoomFix créé");
+            helper.setText(mailTemplate, true);
+            this.emailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
 
         this.modelMapper.map(userRepository.save(user), response);
         return response;
