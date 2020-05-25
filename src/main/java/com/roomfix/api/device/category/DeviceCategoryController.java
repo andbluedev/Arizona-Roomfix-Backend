@@ -36,6 +36,15 @@ public class DeviceCategoryController {
         return this.deviceCategoryRepository.save(newDeviceCategory);
     }
 
+    @PutMapping("/{id}/update")
+    @ResponseStatus(HttpStatus.OK)
+    public DeviceCategory changeDeviceCategoryName(@RequestParam("newName") String newName, @PathVariable("id") long deviceCategoryId){
+        DeviceCategory deviceCategoryToUpdate = this.deviceCategoryRepository.findById(deviceCategoryId).orElseThrow(ResourceNotFoundException::new);
+        deviceCategoryToUpdate.setName(newName);
+        return this.deviceCategoryRepository.save(deviceCategoryToUpdate);
+    }
+
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public DeviceCategory deleteDeviceCategoryById(@PathVariable("id") long deviceCategoryId) {
