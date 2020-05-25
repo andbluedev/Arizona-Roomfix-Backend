@@ -3,8 +3,8 @@ package com.roomfix.api.failureStatistics.dto;
 import lombok.Data;
 
 @Data
-public class BuildingStatisticsDto {
-    private String buildingName;
+public class StatisticsDto {
+    private String dtoname;
     private int closedFailuresSum;
     private int onGoingFailuresSum;
     private int unresolvedFailuresSum;
