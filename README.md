@@ -6,10 +6,11 @@
 
 ## Context
 
-Backend for RoomFix - 4th Year Software Engineering Web Technologies Project The goal was to make a platform to report broken devices in a set of buildings to facilitate and optimize the maintenance.
+Roomfix is a 4th Year Software Engineering school Web Technologies Project. The goal was to make a platform to report broken devices in a set of buildings to facilitate and optimize the maintenance.
 
-This project is a Spring Boot API with Hibernate / JPA as ORM.
-The database used is a MySQL.
+This project is a React.js webapp based on a Spring Boot Boot API ([link](https://github.com/andbluedev/Arizona-Roomfix-Frontend/)). 
+
+This repository contains a Spring Boot API with Hibernate / JPA as ORM and MySQL database.
 
 ## Online Version 
 
