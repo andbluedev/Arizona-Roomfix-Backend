@@ -1,74 +1,90 @@
-# RoomFix - API
+# RoomFix - Spring Boot API
 
-Ce projet est une API Spring Boot avec Hibernate/JPA comme ORM. 
-La base de données utilisée est une MySQL.
-
-## Configurer les paramètres et le profil
-
-La première chose à faire pour lancer l'application est de configurer les paramètres spécifiques à votre machine.
-Tous les paramètres ont des valeurs par défaut faites pour faciliter la première prise en main.
-
-| Usage            | Format               | Valeur par défaut      | Variable à modifier    |
-|------------------|----------------------|------------------------|------------------------|
-| BDD              | user:mdp@host/dbname | root@localhost/roomfix | DB_URL                 |
+## Context
 
 
-[Modifier facilement ce tableau sur TablesGenerator](https://www.tablesgenerator.com/markdown_tables)
+
+<p align="center">
+<img width="300" height="300" src="https://i.ibb.co/tKtb8mv/roomfix8-logo-light.png" alt="roomfix8-logo-light">
+</p>
 
 
-## Le profil de développement
 
-Nous utilisons [les profiles Spring](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html)
-pour configurer les variables spécifiques à chaque environnement (dev, production, etc.).
+This project is a Spring Boot API with Hibernate / JPA as ORM.
+The database used is a MySQL.
 
-Pour lancer l'application en local, vous devez la lancer avec le profil `dev`.
+## Configuration
 
-* Avec IntelliJ : [suivre ce tuto sur Stacko](https://stackoverflow.com/a/39775038/7248759)
-* Avec Maven et le plugin : `./mvnw spring-boot:run`
+The first thing to do to launch the application is to configure the parameters specific to your machine.
+All parameters have default values made to make it easier to get started.
 
-## Les plugins Intellij recommandés
+| Type  | Format               | Example                | Environment Variable |
+|-------|----------------------|------------------------|----------------------|
+| MySQL | user:mdp@host/dbname | root@localhost/roomfix | DB_URL               |
+| SMTP  | smtp.xxxx.xxx        | smtp.gmail.com         | SMTP_HOST            |
+| SMTP  | integer              | 587                    | SMTP_PORT            |
+| SMTP  | email                | roomfix@gmail.com      | SMTP_USERNAME        |
+| SMTP  |                      | abc123                 | SMTP_PASSWORD        ||
 
-- Lombok : pour les POJO (java beans) nous utilisons @data pour auto-générer les getters, setters et constructeur. Ce plugin à ajouter
-à Intellij permet de faire comprendre à l'IDE que ces fonctions existent mais ne sont pas écrites explicitement.
-(Evite que l'IDE dise qu'il ne trouve pas les fonctions)
+
+[Easily edit this table on TablesGenerator](https://www.tablesgenerator.com/markdown_tables)
 
 
-## Les Endpoints
+## Development Profile
 
-Toutes les endpoints sont sur la collection postman associée au repo.
+We are using [Spring profiles](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html)
+to configure variables specific to each environment (dev, production, etc.).
+
+To launch the application locally, you must run it with the `dev` profile
+
+* wil IntelliJ : [follow tutorial on StackOverflow](https://stackoverflow.com/a/39775038/7248759)
+* wil Maven + springplugin : `./mvnw spring-boot:run`
+
+## Recommended Intellij plugins
+
+- Lombok: for POJOs (java beans) we use @data to auto-generate getters, setters and constructors. This plugin to add
+à Intellij allows the IDE to understand that these functions exist but are not explicitly written.
+(Prevent the IDE from saying it can't find the functions)
+
+
+## API Endpoints
+
+Every endpoint are within a collection postman.
 
 
 ## Docker
 
-Docker ici est utilisé pour executer en production l'api.
+Docker here is used to run the API in production.
 
-Pour builder l'image docker.
+To build the docker image.
 
 ```
 docker build . -t roomfix-api:v1
 ```
 
-Runner le conteneur sur le port 8080 de la machine (accessible sur le port 8080 de localhost par exemple).
+Run the container on port 8080 of the machine (accessible on port 8080 of localhost for example).
 
 ```
 docker run <image-roomfix-api> -p 8080:8000 -e DB_URL=<database-user>:<database-password>@<database-url>:3306/roomfix
 ```
 
-Par exemple:
+Example:
 ```
 docker run -d -p 8000:8000 -e "DB_URL=roomfix:PASSWORD@databases.pouretadev.com:3306/roomfix_master" roomfix-api:v1
 ```
 
-Si vous runnez MySQL avec Docker pensez bien à changer `localhost` par `<mysql-container-name>` afin que les containers peuvent communiquer (carte réseau MacOS et Windows ne permettent pas à Docker de communiquer entre eux sur le localhost).
 
-Il est également possible de runner l'image avec le docker-compose qui contient une docker MySQL et de quoi run l'api (il faut la builder avec les consignes ci-dessus).
+If you are running MySQL with Docker, remember to change `localhost` to` <mysql-container-name> `so that the containers can communicate (MacOS and Windows network card do not allow Docker to communicate with each other on the localhost).
 
-Pour run API + MySQL :
+
+It is also possible to run the image with the docker-compose which contains a MySQL docker and what to run the API (you need to build it with the instructions above)
+
+To run API + MySQL :
 ```
 docker-compose up -d
 ```
 
-Pour un MySQL
+to run MySQL only
 ```
 docker-compose up mysqldb -d
 ```
