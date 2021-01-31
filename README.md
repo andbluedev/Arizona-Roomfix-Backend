@@ -1,17 +1,33 @@
 # RoomFix - Spring Boot API
 
-## Context
-
-
-
 <p align="center">
 <img width="300" height="300" src="https://i.ibb.co/tKtb8mv/roomfix8-logo-light.png" alt="roomfix8-logo-light">
 </p>
 
+## Context
 
+Backend for RoomFix - 4th Year Software Engineering Web Technologies Project The goal was to make a platform to report broken devices in a set of buildings to facilitate and optimize the maintenance.
 
 This project is a Spring Boot API with Hibernate / JPA as ORM.
 The database used is a MySQL.
+
+## Online Version 
+
+Demo version of the application: http://roomfix.k8s.pouretadev.com/
+
+Admin user
+```
+username:  admin@isep.fr
+password: test
+```
+
+Regular classique ("Student") 
+```
+username:  bob@isep.fr
+password: test
+```
+
+
 
 ## Configuration
 
